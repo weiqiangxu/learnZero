@@ -11,6 +11,7 @@ import (
 
 // RegisterHandlers 注册路由
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
+
 	server.AddRoutes(
 		[]rest.Route{
 			{
@@ -18,6 +19,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/from/:name",
 				Handler: GreetHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/school/*",
+				Handler: TestHandler(serverCtx),
+			},
 		},
+		// 使用自定义的router
+
 	)
 }

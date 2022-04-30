@@ -28,3 +28,9 @@ func GreetHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 	}
 }
+
+func TestHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		httpx.OkJson(w, "hello")
+	}
+}

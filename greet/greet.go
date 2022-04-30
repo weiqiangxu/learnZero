@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-
 	"learnZero/greet/internal/config"
 	"learnZero/greet/internal/handler"
+	"learnZero/greet/internal/httpx"
 	"learnZero/greet/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
@@ -20,8 +20,11 @@ func main() {
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 
+	// 使用自己实现的router handler
+	runOption := rest.WithRouter(httpx.NewRouter())
 	ctx := svc.NewServiceContext(c)
-	server := rest.MustNewServer(c.RestConf)
+	// 注入自己实现的handler
+	server := rest.MustNewServer(c.RestConf, runOption)
 	defer server.Stop()
 
 	handler.RegisterHandlers(server, ctx)
